@@ -1,4 +1,4 @@
-#!/usr/bin/python
+2#!/usr/bin/python
 import json
 import auth
 
@@ -25,11 +25,18 @@ print "PRINTING INVOICE ADDRESS INFO"
 print(json.dumps(json_single[0]['Contact']['Addresses'], indent=2))
 print "\n"
 
-# print data from each invoice
-for item in json_all:
-	print "PRINTING EACH INVOICE INFO"
-	print item
+# printing all "AddressType" of Addresses inside single invoice
+print "OTHER"
+for item in json_single[0]['Contact']['Addresses']:
+	print "Printing Address Type"
+	print item["AddressType"]
 	print "\n"
+
+# print data from each invoice
+#for item in json_all:
+#	print "PRINTING EACH INVOICE INFO"
+#	print item
+#	print "\n"
 
 ######################
 # TESTING PUT METHOD #
