@@ -1,22 +1,38 @@
 #!/usr/bin/python
-import json
 import auth
 
-# get all invoices
-inv_all = auth.xero.invoices.all()
+# grab all invoice data
+inv = auth.xero.invoices.all()
+# grab all contact data
+contacts = auth.xero.contacts.all()
+# get all contact groups
+contactGroup = auth.xero.contactgroups.all()
+# grab all payments data
+payments = auth.xero.payments.all()
 
-# get all contacts
-contacts_all = auth.xero.contacts.all()
 
 ####################
 # TESTING INVOICES #
 ####################
 
 # print invoice contact details
-print "###### PRINTING INVOICE ######"
-for item in inv_all:
-	print item['Contact']
-	print item['Contact']['Phones'], "\n"
+print "###### PRINTING INVOICE DATA ######"
+for item in inv:
+	c = auth.xero.contacts.get(item['Contact']['ContactID'])
+	#print c[0]
+	print "NAME / COMPANY:", c[0]['Name']
+	print "DATE CREATED:", item['Date']
+	print "DUE DATE:", item['DueDate']
+	print "INVOICE NO:", item['InvoiceNumber']
+	print "REFERENCE (PROJ NO):", item['Reference']
+	print "UNIT:", "???"
+	print "DESCRIPTION:", "???"
+	print "SUBTOTAL:", item['SubTotal']
+	print "TOTAL:", item['Total']
+	print "GST:", item['TotalTax']
+	print "ACCOUNT:", "???"
+	print "STATUS:", item['Status'] #status every 15 mins
+	print "\n"
 
 #####################################
 # TESTING CONTACTS & CONTACT GROUPS #
@@ -24,11 +40,11 @@ for item in inv_all:
 
 # print data from first client in list
 print "### FIRST CONTACT DATA ###"
-print contacts_all[0]
+print contacts[0]
 
 # print all non-suppleir client names and their emails
 print "### NON-SUPPLIER CLIENT NAMES AND EMAILS ###"
-for item in contacts_all:
+for item in contacts:
 	if item['IsSupplier'] == 1:
 		print item['Name']
 		if item.has_key('EmailAddress'):
@@ -38,7 +54,7 @@ for item in contacts_all:
 
 # print all supplier client names and their emails
 print "### NON-SUPPLIER CLIENT NAMES AND EMAILS ###"
-for item in contacts_all:
+for item in contacts:
 	if item['IsSupplier'] == 0:
 		print item['Name']
 		if item.has_key('EmailAddress'):
@@ -46,12 +62,9 @@ for item in contacts_all:
 		else:
 			print "N/A\n"
 
-# get all contact groups
-contactGroup_all = auth.xero.contactgroups.all()
-
 # print all contact group details
 print "### CONTACT GROUPS DATA ###"
-for item in contactGroup_all:
+for item in contactGroup:
 	print "######", item['Name'], "######"
 	print item['Status']
 
@@ -59,11 +72,6 @@ for item in contactGroup_all:
 ####################
 # TESTING PAYMENTS #
 ####################
-
-# get specific invoice
-#contact_single = auth.xero.contacts.get(u'e4a0afbd-aea0-450b-ae23-0ce921e84a77')
-# get all invoices
-#contact_all = auth.xero.contact.all()
 
 
 
