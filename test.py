@@ -11,11 +11,11 @@ contactGroup = auth.xero.contactgroups.all()
 payments = auth.xero.payments.all()
 
 
-####################
-# TESTING INVOICES #
-####################
+########################################
+# TESTING INVOICES & INVOICE REMINDERS #
+########################################
 
-# print invoice contact details
+# print invoice contact data
 print "###### PRINTING INVOICE DATA ######"
 for item in inv:
 	c = auth.xero.contacts.get(item['Contact']['ContactID'])
@@ -33,6 +33,9 @@ for item in inv:
 	print "ACCOUNT:", "???"
 	print "STATUS:", item['Status'] #status every 15 mins
 	print "\n"
+
+# print invoice reminder data
+# not much data to grab here, will just return true / false if reminders are turned on / off
 
 #####################################
 # TESTING CONTACTS & CONTACT GROUPS #
@@ -73,6 +76,18 @@ for item in contactGroup:
 # TESTING PAYMENTS #
 ####################
 
+# print payment details
+print "###### PRINTING PAYMENT DATA ######"
+for pay in payments:
+	#p = auth.xero.payments.get(pay['Contact']['ContactID'])
+	#print c[0]
+	print "DATE:", pay['Date']
+	print "AMOUNT:", pay['Amount']
+	print "INVOICE NO:", pay['Invoice']['InvoiceNumber']
+	print "REFERENCE (PROJ NO):", pay['Reference']
+	print "STATUS:", pay['Status']
+	print "PAYMENT TYPE:", pay['PaymentType']
+	print "\n"
 
 
 
