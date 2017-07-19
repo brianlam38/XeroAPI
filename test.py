@@ -88,8 +88,3 @@ for pay in payments:
 	print "STATUS:", pay['Status']
 	print "PAYMENT TYPE:", pay['PaymentType']
 	print "\n"
-
-
-
-
-
